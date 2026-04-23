@@ -24,7 +24,9 @@ import {
     Server,
     Shield,
     Activity,
-    Inbox
+    Inbox,
+    LifeBuoy,
+    MessageSquareText,
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -54,6 +56,11 @@ const getNavGroups = (userRole?: string): NavGroup[] => {
                 title: 'My Hosting',
                 href: '/my/hosting',
                 icon: Server,
+            },
+            {
+                title: 'Help Center',
+                href: '/help',
+                icon: LifeBuoy,
             },
         ],
     });
@@ -87,6 +94,11 @@ const getNavGroups = (userRole?: string): NavGroup[] => {
                     title: 'Hosting Orders',
                     href: '/admin/hosting-orders',
                     icon: Server,
+                },
+                {
+                    title: 'Support Tickets',
+                    href: '/admin/support-tickets',
+                    icon: MessageSquareText,
                 },
                 // {
                 //     title: 'Registry Accounts',

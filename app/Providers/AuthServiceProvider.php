@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\Customer;
 use App\Models\DomainOrder;
 use App\Models\Order;
+use App\Models\SupportTicket;
 use App\Policies\CustomerPolicy;
 use App\Policies\DomainOrderPolicy;
 use App\Policies\OrderPolicy;
+use App\Policies\SupportTicketPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         Order::class => OrderPolicy::class,
         DomainOrder::class => DomainOrderPolicy::class,
         Customer::class => CustomerPolicy::class,
+        SupportTicket::class => SupportTicketPolicy::class,
     ];
 
     /**
