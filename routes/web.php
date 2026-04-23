@@ -15,6 +15,26 @@ Route::get('/vps', [App\Http\Controllers\PublicProductController::class, 'vps'])
 Route::get('/dedicated', [App\Http\Controllers\PublicProductController::class, 'dedicatedServers'])->name('dedicated');
 Route::get('/ssl', [App\Http\Controllers\PublicProductController::class, 'ssl'])->name('ssl');
 
+Route::get('/contact', function () {
+    return Inertia::render('PublicContact', [
+        'contactEmail' => config('mail.from.address', 'support@lionzhost.com'),
+    ]);
+})->name('contact');
+
+Route::get('/about', fn () => Inertia::render('PublicAbout'))->name('about');
+
+Route::get('/privacy', function () {
+    return Inertia::render('PublicPrivacyPolicy', [
+        'contactEmail' => config('mail.from.address', 'support@lionzhost.com'),
+    ]);
+})->name('privacy');
+
+Route::get('/terms', function () {
+    return Inertia::render('PublicTermsOfService', [
+        'contactEmail' => config('mail.from.address', 'support@lionzhost.com'),
+    ]);
+})->name('terms');
+
 Route::get('/welcome', function () {
     return Inertia::render('welcome');
 })->name('welcome');
