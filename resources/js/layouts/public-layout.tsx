@@ -401,7 +401,7 @@ export default function PublicLayout({ children, title = "LionzHost" }: PublicLa
                             <div>
                                 <h3 className="text-lg font-semibold mb-4">Support</h3>
                                 <ul className="space-y-2">
-                                    <li><a href="#" className="text-gray-400 hover:text-white">Help Center</a></li>
+                                    <li><Link href="/help" className="text-gray-400 hover:text-white">Help Center</Link></li>
                                     <li><Link href="/contact" className="text-gray-400 hover:text-white">Contact Us</Link></li>
                                 </ul>
                             </div>

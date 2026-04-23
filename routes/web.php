@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\HelpCenterController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -74,6 +76,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/payment/afs/callback', [App\Http\Controllers\PaymentController::class, 'afsCallback'])->name('payment.afs.callback');
 });
 
+// Help Center — support tickets (authenticated)
+Route::middleware(['auth', 'verified'])->prefix('help')->name('help.')->group(function () {
+    Route::get('/', [HelpCenterController::class, 'index'])->name('index');
+    Route::get('/tickets/create', [HelpCenterController::class, 'create'])->name('tickets.create');
+    Route::post('/tickets', [HelpCenterController::class, 'store'])->name('tickets.store');
+    Route::get('/tickets/{ticket}', [HelpCenterController::class, 'show'])->name('tickets.show');
+    Route::post('/tickets/{ticket}/messages', [HelpCenterController::class, 'storeMessage'])->name('tickets.messages.store');
+});
+
 // Payment webhook routes (no auth middleware)
 Route::post('/webhooks/razorpay', [App\Http\Controllers\PaymentWebhookController::class, 'razorpay'])->name('webhooks.razorpay');
 Route::post('/webhooks/stripe', [App\Http\Controllers\PaymentWebhookController::class, 'stripe'])->name('webhooks.stripe');
@@ -134,6 +145,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/audit-logs', function () {
         return Inertia::render('Admin/AuditLogs');
     })->name('audit-logs');
+
+    // Support tickets (queue)
+    Route::get('/support-tickets', [App\Http\Controllers\Admin\SupportTicketController::class, 'index'])->name('support-tickets.index');
+    Route::get('/support-tickets/{supportTicket}', [App\Http\Controllers\Admin\SupportTicketController::class, 'show'])->name('support-tickets.show');
+    Route::post('/support-tickets/{supportTicket}/messages', [App\Http\Controllers\Admin\SupportTicketController::class, 'storeMessage'])->name('support-tickets.messages.store');
+    Route::post('/support-tickets/{supportTicket}/close', [App\Http\Controllers\Admin\SupportTicketController::class, 'close'])->name('support-tickets.close');
+    Route::post('/support-tickets/{supportTicket}/reopen', [App\Http\Controllers\Admin\SupportTicketController::class, 'reopen'])->name('support-tickets.reopen');
 });
 
 // Customer routes (protected by auth)
