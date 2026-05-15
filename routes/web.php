@@ -89,8 +89,9 @@ Route::middleware(['auth', 'verified'])->prefix('help')->name('help.')->group(fu
 Route::post('/webhooks/razorpay', [App\Http\Controllers\PaymentWebhookController::class, 'razorpay'])->name('webhooks.razorpay');
 Route::post('/webhooks/stripe', [App\Http\Controllers\PaymentWebhookController::class, 'stripe'])->name('webhooks.stripe');
 
-// Admin routes (protected by admin-or-staff gate)
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+// Admin routes (protected by auth and verified)
+Route::middleware(['auth', 'verified', 'admin.staff'])->prefix('admin')->name('admin.')->group(function () {
+    
     // TLDs management
     Route::resource('tlds', App\Http\Controllers\Admin\TldController::class);
     
