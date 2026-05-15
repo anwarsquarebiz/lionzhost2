@@ -30,6 +30,10 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        $middleware->alias([
+            'admin.staff' => \App\Http\Middleware\AdminOrStaff::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
